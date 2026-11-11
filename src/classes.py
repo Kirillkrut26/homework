@@ -50,7 +50,7 @@ class Category:
         self.__products.append(product)
 
     @property
-    def products_str(self):
+    def products(self):
         result = ''
         for product in self.__products:
             result += f'{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n'
