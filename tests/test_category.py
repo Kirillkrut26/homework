@@ -35,6 +35,7 @@ def test_Category(smartphones_category, samsung_product):
         "iphone, 100000.0 руб. Остаток: 5 шт.\n"
         "Samsung, 80000.0 руб. Остаток: 3 шт.\n"
     )
+    assert smartphones_category.product_count == 2
 
     assert smartphones_category.products == (
         "iphone, 100000.0 руб. Остаток: 5 шт.\n"
