@@ -33,8 +33,8 @@ class Product:
 
 
 class Category:
-    category_count = 0
-    product_count = 0
+    category_count: int = 0
+    product_count: int = 0
     name: str
     description: str
     products: list[Product]
@@ -48,6 +48,7 @@ class Category:
 
     def add_product(self, product):
         self.__products.append(product)
+        Category.product_count +=1
 
     @property
     def products(self):
