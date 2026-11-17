@@ -48,3 +48,5 @@ def test_Category(smartphones_category, samsung_product):
     samsung_product.price = -100000.0
     assert samsung_product.price == 100000.0
 
+    assert str(smartphones_category) == 'Смартфоны, количество продуктов: 8 шт.'
+

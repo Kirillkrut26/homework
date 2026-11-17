@@ -29,3 +29,8 @@ def test_Product(iphone,samsung_product):
     samsung.price = -100000.0
     assert samsung.price == 100000.0
 
+    assert str(iphone) == 'Iphone 15, 210000.0 руб. Остаток: 8 шт.'
+    assert str(samsung) == 'Samsung, 100000.0 руб. Остаток: 5 шт.'
+
+    assert samsung + iphone == 2180000.0
+
