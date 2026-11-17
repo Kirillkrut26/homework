@@ -1,3 +1,6 @@
+from unicodedata import category
+
+
 class Product:
     name: str
     description: str
@@ -31,6 +34,12 @@ class Product:
         else:
             self.__price = new_price
 
+    def __str__(self):
+        return f'{self.name}, {self.price} руб. Остаток: {self.quantity} шт.'
+
+    def __add__(self, other):
+        return self.price * self.quantity + other.price * other.quantity
+
 
 class Category:
     category_count: int = 0
@@ -54,8 +63,43 @@ class Category:
     def products(self):
         result = ''
         for product in self.__products:
-            result += f'{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n'
+            result += f'{product}\n'
 
         return result
+
+    @property
+    def products_in_list(self):
+        return self.__products
+
+    def summ_product_category(self):
+        category_quantity = 0
+        for product in self.__products:
+            category_quantity += product.quantity
+
+        return category_quantity
+
+    def __str__(self):
+        return f'{self.name}, количество продуктов: {self.summ_product_category()} шт.'
+
+
+class CategoryIterator:
+
+    def __init__ (self, category: Category) -> None:
+        self.category = category
+        self.index = 0
+
+    def __iter__(self) -> CategoryIterator:
+        self.index = 0
+        return self
+
+    def __next__(self) -> Product:
+        if self.index < len(self.category.products_in_list):
+            product = self.category.products_in_list[self.index]
+            self.index += 1
+            return product
+        else:
+            raise StopIteration
+
+
 
 
