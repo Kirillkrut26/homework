@@ -1,6 +1,3 @@
-from unicodedata import category
-
-
 class Product:
     name: str
     description: str
@@ -17,10 +14,10 @@ class Product:
 
     @classmethod
     def new_product(cls, dict_products: dict) -> Product:
-        name_dict = dict_products['name']
-        description_dict= dict_products['description']
-        price_dict= dict_products['price']
-        quantity_dict= dict_products['quantity']
+        name_dict = dict_products["name"]
+        description_dict = dict_products["description"]
+        price_dict = dict_products["price"]
+        quantity_dict = dict_products["quantity"]
         return cls(name_dict, description_dict, price_dict, quantity_dict)
 
     @property
@@ -30,15 +27,18 @@ class Product:
     @price.setter
     def price(self, new_price):
         if new_price <= 0:
-            print('Цена не должна быть нулевая или отрицательная')
+            print("Цена не должна быть нулевая или отрицательная")
         else:
             self.__price = new_price
 
     def __str__(self):
-        return f'{self.name}, {self.price} руб. Остаток: {self.quantity} шт.'
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
 
     def __add__(self, other):
-        return self.price * self.quantity + other.price * other.quantity
+        if type(self) is type(other):
+            return self.price * self.quantity + other.price * other.quantity
+        else:
+            raise TypeError
 
 
 class Category:
@@ -56,14 +56,17 @@ class Category:
         Category.product_count += len(products)
 
     def add_product(self, product):
-        self.__products.append(product)
-        Category.product_count +=1
+        if isinstance(product, Product):
+            self.__products.append(product)
+            Category.product_count += 1
+        else:
+            raise TypeError
 
     @property
     def products(self):
-        result = ''
+        result = ""
         for product in self.__products:
-            result += f'{product}\n'
+            result += f"{product}\n"
 
         return result
 
@@ -79,12 +82,13 @@ class Category:
         return category_quantity
 
     def __str__(self):
-        return f'{self.name}, количество продуктов: {self.summ_product_category()} шт.'
+        return (f"{self.name}, количество продуктов: "
+                f"{self.summ_product_category()} шт.")
 
 
 class CategoryIterator:
 
-    def __init__ (self, category: Category) -> None:
+    def __init__(self, category: Category) -> None:
         self.category = category
         self.index = 0
 
@@ -101,5 +105,37 @@ class CategoryIterator:
             raise StopIteration
 
 
+class Smartphone(Product):
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        price: float,
+        quantity: int,
+        efficiency,
+        model: str,
+        memory: int,
+        color: str,
+    ) -> None:
+        super().__init__(name, description, price, quantity)
+        self.efficiency = efficiency
+        self.model = model
+        self.memory = memory
+        self.color = color
 
 
+class LawnGrass(Product):
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        price: float,
+        quantity: int,
+        country: str,
+        germination_period,
+        color: str,
+    ) -> None:
+        super().__init__(name, description, price, quantity)
+        self.country = country
+        self.germination_period = germination_period
+        self.color = color
