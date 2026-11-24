@@ -28,8 +28,9 @@ def test_Category(smartphones_category, samsung_product):
         " но и получения дополнительных"
         " функций для удобства жизни"
     )
-    assert smartphones_category.products == ("iphone, 100000.0 руб."
-                                             " Остаток: 5 шт.\n")
+    assert smartphones_category.products == (
+        "iphone, 100000.0 руб." " Остаток: 5 шт.\n"
+    )
     assert smartphones_category.category_count == 1
     assert smartphones_category.product_count == 1
 
@@ -53,5 +54,4 @@ def test_Category(smartphones_category, samsung_product):
     samsung_product.price = -100000.0
     assert samsung_product.price == 100000.0
 
-    assert (str(smartphones_category) ==
-            "Смартфоны, количество продуктов: 8 шт.")
+    assert str(smartphones_category) == "Смартфоны, количество продуктов: 8 шт."

@@ -1,6 +1,6 @@
 import pytest
 
-from src.classes import Product
+from src.classes import Product, BaseProduct
 
 
 @pytest.fixture()
@@ -41,3 +41,14 @@ def test_Product(iphone, samsung_product):
     assert samsung + iphone == 2180000.0
     with pytest.raises(TypeError):
         assert iphone + "3313"
+
+
+def test_base_product():
+    with pytest.raises(TypeError):
+        BaseProduct()
+
+
+def test_print_mixing(capsys):
+    Product("Тест", "Описание", 100.0, 5)
+    captured = capsys.readouterr()
+    assert captured.out.strip() == "Product('Тест', 'Описание', 100.0, 5)"
